@@ -1,0 +1,11 @@
+.xlxs
+env/
+.env/
+myenv/
+.myenv/
+myenv2/
+.myenv2/
+*.pyc
+__pycache__/
+.vscode/
+.DS_Store
