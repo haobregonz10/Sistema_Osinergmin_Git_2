@@ -2,8 +2,7 @@ from PySide2.QtWidgets import QApplication
 from PySide2.QtCore import Qt
 from controllers.login_window import LoginWindowForm
 
-
-# Manejo de escalado de alta resolución
+# Manejo de escalado de alta resolución b
 if hasattr(Qt, 'AA_EnableHighDpiScaling'):
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 if hasattr(Qt, 'AA_UseHighDpiPixmaps'):

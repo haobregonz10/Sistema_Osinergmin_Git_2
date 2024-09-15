@@ -218,7 +218,7 @@ class ListBookWindow(QWidget,Ui_ListBookForm):
             respuesta=msg_boxes.alert_msgbox("Corfirmar Eliminar","¿Estas seguro de eliminar el registro?")
             if respuesta== QMessageBox.Yes:
                 if selected_row:
-                    book_id = str(selected_row[1].text())
+                    book_id = str(selected_row[2].text())
                     row = selected_row[1].row()
 
                     if delete_book_Central_Generacion(book_id):
@@ -234,7 +234,7 @@ class ListBookWindow(QWidget,Ui_ListBookForm):
             respuesta=msg_boxes.alert_msgbox("Corfirmar Eliminar","¿Estas seguro de eliminar el registro?")
             if respuesta== QMessageBox.Yes:
                 if selected_row:
-                    book_id = str(selected_row[1].text())
+                    book_id = str(selected_row[2].text())
                     row = selected_row[1].row()
 
                     if delete_book_Subestacion(book_id):
@@ -250,8 +250,8 @@ class ListBookWindow(QWidget,Ui_ListBookForm):
             respuesta=msg_boxes.alert_msgbox("Corfirmar Eliminar","¿Estas seguro de eliminar el registro?")
             if respuesta== QMessageBox.Yes:
                 if selected_row:
-                    book_id = str(selected_row[1].text())
-                    row = selected_row[1].row()
+                    book_id = str(selected_row[2].text())
+                    row = selected_row[2].row()
 
                     if delete_book_Linea_Transmision(book_id):
                     

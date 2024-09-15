@@ -3,6 +3,8 @@ env/
 .env/
 myenv/
 .myenv/
+build/
+.build/
 myenv2/
 .myenv2/
 *.pyc

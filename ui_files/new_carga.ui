@@ -80,7 +80,6 @@ QPushButton:hover
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -221,7 +220,7 @@ QPushButton:hover
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="editable">
@@ -239,7 +238,6 @@ QPushButton:hover
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -297,7 +295,7 @@ QPushButton:hover
    </property>
    <property name="font">
     <font>
-     <pointsize>11</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
    <property name="text">

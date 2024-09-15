@@ -2,7 +2,7 @@ import sys
 import os
 from cx_Freeze import setup, Executable
 
-files = ['assets', 'book_files','books_db.db','REPORTES','pys2_msgboxes']
+files = ['assets', 'book_files','books_db.db','pys2_msgboxes','DATABASEAPP.db','DATABASEAPPTEMP.db']
 
 exe = Executable(
     script="app.py",

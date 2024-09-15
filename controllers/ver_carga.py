@@ -8,6 +8,7 @@ from datetime import datetime
 import sqlite3
 from sqlite3 import Error
 from PySide2.QtGui import *
+import math
 import pandas as pd  # Necesitarás instalar pandas si no lo tienes instalado
 
 class NewBookWindow(QDialog, Ui_NewBook):
@@ -45,10 +46,15 @@ class NewBookWindow(QDialog, Ui_NewBook):
         self.tableCarga.setAlternatingRowColors(True)
         # Puedes agregar configuraciones adicionales aquí, como estilos de encabezado, colores de fondo, etc.
 
+
     def populate_table(self, data):
         if data is not None:
             self.tableCarga.setRowCount(len(data))
             print("REFRESH4")
+            
+            # Obtener los encabezados de columna para identificar columnas de fecha
+            column_headers = [self.tableCarga.horizontalHeaderItem(i).text() for i in range(self.tableCarga.columnCount())]
+            
             for index_row, row in enumerate(data):
                 # Incrementamos el índice de fila en 1 para comenzar con el número de orden en 1
                 order_number = index_row + 1
@@ -57,21 +63,36 @@ class NewBookWindow(QDialog, Ui_NewBook):
                 self.tableCarga.setItem(index_row, 0, QTableWidgetItem(str(order_number)))
                 
                 for index_cell, cell in enumerate(row):
-                    # Llenamos los datos de la fila a partir de la segunda columna
-                    self.tableCarga.setItem(index_row, index_cell + 1, QTableWidgetItem(str(cell)))
+                    # Verificamos que el índice de la celda no exceda el número de columnas
+                    if index_cell + 1 >= len(column_headers):
+                        print(f"Índice fuera de rango: {index_cell + 1}")
+                        continue  # Saltar si no hay más encabezados
                     
-                    if index_cell == 13:
-                        itemx = self.tableCarga.item(index_row, index_cell + 1)  # Se ajusta el índice de la celda
-                        print("EL ITEM ACTUAL ES: ", itemx)
-                        if itemx.text() == "PENDIENTE":
-                            itemx.setForeground(QBrush(QColor(255, 0, 0)))
-                        else:
-                            itemx.setForeground(QBrush(QColor(0, 0, 255)))
+                    # Si la celda está vacía o contiene 'nan', mostramos una cadena vacía
+                    if cell is None or (isinstance(cell, float) and math.isnan(cell)):
+                        cell = ""
 
+                    # Llenamos los datos de la fila a partir de la segunda columna
+                    header = column_headers[index_cell + 1]  # Saltar la primera columna que es el número de orden
+                    
+                    # Si la columna contiene la palabra "FECHA", intentamos cambiar el formato
+                    if "FECHA" in header.upper() and cell:
+                        try:
+                            # Intentamos convertir el valor en una fecha
+                            date_obj = datetime.strptime(str(cell), "%Y-%m-%d %H:%M:%S")
+                            formatted_date = date_obj.strftime("%d/%m/%Y")
+                            self.tableCarga.setItem(index_row, index_cell + 1, QTableWidgetItem(formatted_date))
+                        except ValueError:
+                            # Si falla la conversión, lo mostramos tal cual
+                            self.tableCarga.setItem(index_row, index_cell + 1, QTableWidgetItem(str(cell)))
+                    else:
+                        self.tableCarga.setItem(index_row, index_cell + 1, QTableWidgetItem(str(cell)))
+                        
             print("REFRESH5")
             headerVertical = self.tableCarga.verticalHeader()
             headerVertical.resizeSections(QHeaderView.ResizeToContents)
             headerVertical.setStretchLastSection(True)
+
 
     def ver_tabla_auditoria(self):
         selected_table = self.cbTabla.currentText()
@@ -194,6 +215,9 @@ class NewBookWindow(QDialog, Ui_NewBook):
             "Transformador_Medicion",
             "Transformador_Medicion_Ubicacion_Esquema",
             "Transformador_Medicion_Ubicacion_Plano_Planta",
+            "Transformador_Medicion_Central_Generacion",
+            "Transformador_Medicion_Central_Ubicacion_Esquema",
+            "Transformador_Medicion_Central_Ubicacion_Plano_Planta",
             "Transformador_Potencia",
             "Transformador_Potencia_Ubicacion_Esquema",
             "Transformador_Potencia_Ubicacion_Plano_Planta",
